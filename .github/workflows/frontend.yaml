@@ -18,9 +18,9 @@ jobs:
       contents: read                          # actions/checkoutに必要な権限
     steps:
       - name: Echo env vars
-        run: echo "AWS_ACCOUNT_ID... ${{ secrets.AWS_ACCOUNT_ID }}, AWS_ROLE_NAME... ${{ secrets.AWS_ROLE_NAME }}"
+        run: echo "AWS_ACCOUNT_ID... ${{ AWS_ACCOUNT_ID }}, AWS_ROLE_NAME... ${{ AWS_ROLE_NAME }}"
       - name: echo secrets
-        run: echo ${{ secrets }}
+        run: echo ${{ secrets.AWS_ACCOUNT_ID }}
       # - name: Configure AWS Credentials
       #   uses: aws-actions/configure-aws-credentials@v3  # AWSの認証情報を設定するアクション
       #   with:
