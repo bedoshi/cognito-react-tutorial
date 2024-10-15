@@ -10,41 +10,27 @@ on:                                       # ワークフローのトリガーを
     branches:
       - main                              # mainブランチへのプッシュ時にトリガー
 
-jobs:
-  deploy:
+jobs:                                     # ワークフロー内のジョブを定義
+  deploy:                                 # デプロイジョブ
     runs-on: ubuntu-latest                # ジョブを実行するOS（Ubuntuの最新バージョン）
-    permissions:                              # ワークフローに必要な権限を指定
-      id-token: write                         # JWTリクエストに必要な権限
-      contents: read                          # actions/checkoutに必要な権限
-    steps:
+    steps:                                # ジョブ内で実行されるステップのリスト
+      - name: Checkout Code
+        uses: actions/checkout@v4        # リポジトリの内容をチェックアウトするアクション
+      - name: Set up Node.js
+        uses: actions/setup-node@v3      # Node.jsのセットアップを行うアクション
+        with:
+          node-version: '18'             # Node.jsのバージョンを指定
+      - name: Install Dependencies
+        run: npm install                 # 依存関係のインストール
+      - name: Build
+        run: npm run build               # ビルド
+      - name: change path to push bult files
+        run: cd dist
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v3  # AWSの認証情報を設定するアクション
+        uses: aws-actions/configure-aws-credentials@v2  # AWSの認証情報を設定するアクション
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
           aws-region: ap-northeast-1
-        env:
-          ACTIONS_STEP_DEBUG: true
-
-# jobs:                                     # ワークフロー内のジョブを定義
-#   deploy:                                 # デプロイジョブ
-#     runs-on: ubuntu-latest                # ジョブを実行するOS（Ubuntuの最新バージョン）
-#     steps:                                # ジョブ内で実行されるステップのリスト
-#       - name: Checkout Code
-#         uses: actions/checkout@v4        # リポジトリの内容をチェックアウトするアクション
-#       - name: Set up Node.js
-#         uses: actions/setup-node@v3      # Node.jsのセットアップを行うアクション
-#         with:
-#           node-version: '18'             # Node.jsのバージョンを指定
-#       - name: Install Dependencies
-#         run: npm install                 # 依存関係のインストール
-#       - name: Build
-#         run: npm run build               # ビルド
-#       - name: path change to push bult files
-#         run: cd dist
-#       - name: Configure AWS Credentials
-#         uses: aws-actions/configure-aws-credentials@v2  # AWSの認証情報を設定するアクション
-#         with:
-#           role-to-assume: ${{ secrets.DEPLOY_IAM_ROLE_ARN }}
-#           aws-region: ap-northeast-1
-#       - name: Sync to S3
-#         run: aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --exact-timestamps --region ap-northeast-3
+      - name: Sync to S3
+        run: aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --exact-timestamps --region ap-northeast-3
+ 
