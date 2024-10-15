@@ -19,13 +19,15 @@ jobs:
     steps:
       - name: Echo env vars
         run: echo "AWS_ACCOUNT_ID... ${{ secrets.AWS_ACCOUNT_ID }}, AWS_ROLE_NAME... ${{ secrets.AWS_ROLE_NAME }}"
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v3  # AWSの認証情報を設定するアクション
-        with:
-          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
-          aws-region: ap-northeast-1
-        env:
-          ACTIONS_STEP_DEBUG: true
+      - name: echo secrets
+        run: echo ${{ secrets }}
+      # - name: Configure AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v3  # AWSの認証情報を設定するアクション
+      #   with:
+      #     role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
+      #     aws-region: ap-northeast-1
+      #   env:
+      #     ACTIONS_STEP_DEBUG: true
 
 # jobs:                                     # ワークフロー内のジョブを定義
 #   deploy:                                 # デプロイジョブ
