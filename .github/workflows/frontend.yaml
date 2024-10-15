@@ -27,7 +27,7 @@ jobs:                                     # ワークフロー内のジョブを
       - name: change path to push bult files
         run: cd dist
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2  # AWSの認証情報を設定するアクション
+        uses: aws-actions/configure-aws-credentials@v3  # AWSの認証情報を設定するアクション
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/${{ secrets.AWS_ROLE_NAME }}
           aws-region: ap-northeast-1
