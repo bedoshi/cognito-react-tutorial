@@ -10,13 +10,12 @@ on:                                       # ワークフローのトリガーを
     branches:
       - main                              # mainブランチへのプッシュ時にトリガー
 
-permissions:                              # ワークフローに必要な権限を指定
-  id-token: write                         # JWTリクエストに必要な権限
-  contents: read                          # actions/checkoutに必要な権限
-
 jobs:
   deploy:
     runs-on: ubuntu-latest                # ジョブを実行するOS（Ubuntuの最新バージョン）
+    permissions:                              # ワークフローに必要な権限を指定
+      id-token: write                         # JWTリクエストに必要な権限
+      contents: read                          # actions/checkoutに必要な権限
     steps:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v3  # AWSの認証情報を設定するアクション
