@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest                # ジョブを実行するOS（Ubuntuの最新バージョン）
     steps:
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v2  # AWSの認証情報を設定するアクション
+        uses: aws-actions/configure-aws-credentials@v3  # AWSの認証情報を設定するアクション
         with:
           role-to-assume: ${{ secrets.DEPLOY_IAM_ROLE_ARN }}
           aws-region: ap-northeast-1
