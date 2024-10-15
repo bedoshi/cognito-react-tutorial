@@ -13,6 +13,9 @@ on:                                       # ワークフローのトリガーを
 jobs:                                     # ワークフロー内のジョブを定義
   deploy:                                 # デプロイジョブ
     runs-on: ubuntu-latest                # ジョブを実行するOS（Ubuntuの最新バージョン）
+    permissions:
+      id-token: write
+      contents: read
     steps:                                # ジョブ内で実行されるステップのリスト
       - name: Checkout Code
         uses: actions/checkout@v4        # リポジトリの内容をチェックアウトするアクション
