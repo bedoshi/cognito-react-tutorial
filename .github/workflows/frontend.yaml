@@ -35,6 +35,6 @@ jobs:                                     # ワークフロー内のジョブを
         uses: aws-actions/configure-aws-credentials@v3  # AWSの認証情報を設定するアクション
         with:
           role-to-assume: ${{ secrets.DEPLOY_IAM_ROLE_ARN }}
-          aws-region: ap-northeast-3
+          aws-region: ap-northeast-1
       - name: Sync to S3
         run: aws s3 sync . s3://${{ secrets.S3_BUCKET_NAME }} --exact-timestamps --region ap-northeast-3
